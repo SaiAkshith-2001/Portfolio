@@ -248,7 +248,7 @@ const Portfolio = (props) => {
     {
       title: "Blog Application",
       description:
-        "Built a full-featured Blog Application platform using React and Material UI",
+        "Built a full-featured Blog Application platform using React,NodeJS, ExpressJS and Material UI",
       image: "coverpage1.jpg",
       technologies: ["ReactJS", "ExpressJS", "NodeJS", "MUI", "JWT"],
       url: "https://github.com/SaiAkshith-2001/Blog-App",
@@ -320,25 +320,27 @@ const Portfolio = (props) => {
       organization: "By NamasteDev.com",
       description:
         "Explored and learnt various concepts of JavaScript in-depth such as DOM manipulation, event handling, asynchronous programming, and more.",
+      url: "https://drive.google.com/file/d/1hyTvoKj5qh6M43CfyTOf5i61aX5N0Az1/view?pli=1",
     },
     {
       title: "ReactJS",
       organization: "By Udemy",
       description:
         "Learnt the fundamentals of React, NextJS and built a simple to-do list application.",
+      url: "https://www.udemy.com/certificate/UC-f1ebe89a-abc8-4c9d-9d57-c87819582916/",
     },
     {
       title: "SQL BootCamp ",
       organization: "By Udemy",
       description: "Learnt the basics of SQL and created a simple database.",
+      url: "https://www.udemy.com/certificate/UC-eab5097b-0b89-4280-9f4d-9f8f7e0451dc/",
     },
-
-    {
-      title: "Best Handwritten Skills",
-      organization: "By Diddi Satish",
-      description:
-        "Recognized for exceptional calligraphy and outstanding handwritten skills.",
-    },
+    // {
+    //   title: "Best Handwritten Skills",
+    //   organization: "By Diddi Satish",
+    //   description:
+    //     "Recognized for exceptional calligraphy and outstanding handwritten skills.",
+    // },
   ];
   const interests = [
     {
@@ -672,7 +674,18 @@ const Portfolio = (props) => {
             {achievements.map((achievement, index) => (
               <Card key={index} sx={{ my: 2 }}>
                 <CardContent>
-                  <Typography variant="h6">{achievement.title}</Typography>
+                  <Typography variant="h6">
+                    {achievement.title}{" "}
+                    <Tooltip title="Link" arrow>
+                      <IconButton
+                        aria-label="github_link"
+                        href={achievement.url}
+                        target="_blank"
+                      >
+                        <FiLink2 />
+                      </IconButton>
+                    </Tooltip>
+                  </Typography>
                   <Typography color="text.secondary">
                     {achievement.organization}
                   </Typography>
