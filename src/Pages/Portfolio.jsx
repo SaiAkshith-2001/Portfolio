@@ -316,9 +316,28 @@ const Portfolio = (props) => {
 
   const achievements = [
     {
+      title: "Namaste JavaScript ",
+      organization: "By NamasteDev.com",
+      description:
+        "Explored and learnt various concepts of JavaScript in-depth such as DOM manipulation, event handling, asynchronous programming, and more.",
+    },
+    {
+      title: "ReactJS",
+      organization: "By Udemy",
+      description:
+        "Learnt the fundamentals of React, NextJS and built a simple to-do list application.",
+    },
+    {
+      title: "SQL BootCamp ",
+      organization: "By Udemy",
+      description: "Learnt the basics of SQL and created a simple database.",
+    },
+
+    {
       title: "Best Handwritten Skills",
       organization: "By Diddi Satish",
-      description: "Recognized Calligraphy for exceptional handwritten skills",
+      description:
+        "Recognized for exceptional calligraphy and outstanding handwritten skills.",
     },
   ];
   const interests = [
@@ -482,6 +501,8 @@ const Portfolio = (props) => {
               </Typography>
               <Button
                 variant="outlined"
+                component="a"
+                href="https://drive.google.com/file/d/1U05PtXj_YSE1ccqYuPaUji4s9X2c-HMO/view?usp=sharing"
                 size="Large"
                 sx={{
                   textTransform: "none",
@@ -646,7 +667,7 @@ const Portfolio = (props) => {
               gutterBottom
               sx={{ display: "flex", alignItems: "center" }}
             >
-              Achievement(s)
+              Achievement(s) and Certification(s)
             </Typography>
             {achievements.map((achievement, index) => (
               <Card key={index} sx={{ my: 2 }}>
