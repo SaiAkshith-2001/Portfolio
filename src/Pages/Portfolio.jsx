@@ -255,9 +255,9 @@ const Portfolio = (props) => {
     {
       title: "Blog Application",
       description:
-        "Built a full-featured Blog Application platform using React,NodeJS, ExpressJS and Material UI",
+        "Built a full-featured full stack Blog Application platform using MongoDB, ExpressJS, ReactJS, NodeJS and Material UI",
       image: "coverpage1.jpg",
-      technologies: ["ReactJS", "ExpressJS", "NodeJS", "MUI", "JWT"],
+      technologies: ["MongoDB", "ExpressJS", "ReactJS", "NodeJS", "MUI", "JWT"],
       url: "https://github.com/SaiAkshith-2001/Blog-App",
     },
     {
@@ -374,7 +374,7 @@ const Portfolio = (props) => {
                 </IconButton>
                 <Typography component="div" sx={{ flexGrow: 1 }}>
                   <Button disableRipple color="inherit" component="a" href="#">
-                    &lt;/&gt; Sai Akshith
+                    &lt; Sai Akshith /&gt;
                   </Button>
                 </Typography>
                 <Box
