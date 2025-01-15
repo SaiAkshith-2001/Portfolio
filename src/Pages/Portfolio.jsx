@@ -254,8 +254,14 @@ const Portfolio = (props) => {
   const projects = [
     {
       title: "Blog Application",
-      description:
-        "Built a full-featured full stack Blog Application platform using MongoDB, ExpressJS, ReactJS, NodeJS and Material UI",
+      description: `
+      • Built a full-featured full stack Blog Application, using MongoDB, ExpressJS, ReactJS, NodeJS and Material UI.
+      • Developed a Medium-like platform for content creating, editing, and   management.
+      • Optimized performance with lazy loading and code splitting. 
+      • Integrated JWT for secure Authentication, Authorization, and Role Based Access Control.
+      • Integrated robust error-handling mechanisms on both client-side and server side using form validation library using Yup, useForm custom hooks, express-validators and ensuring data integrity. 
+      • Renders various Markdown Content and includes built-in features including Note Editor using React Quill.
+      • Integrated dynamic React Charts to create intuitive and visually compelling infographics, effectively showcasing comprehensive user interactions for each post.`,
       image: "coverpage1.jpg",
       technologies: ["MongoDB", "ExpressJS", "ReactJS", "NodeJS", "MUI", "JWT"],
       url: "https://github.com/SaiAkshith-2001/Blog-App",
@@ -291,15 +297,15 @@ const Portfolio = (props) => {
       company: "ProArch IT Solutions Pvt Ltd",
       role: "Junior Software Engineer",
       duration: "October 2024 - Present",
-      description:
-        "Developing responsive web applications using React and Material UI ",
+      description: `• Collaborated effectively with teams in Agile environment managed by Jira, consistently delivering results with-in biweekly sprints user focused features using React, TypeScript, and MUI.
+        • Refactored previous code into MUI components with fully responsive web application, optimizing load times and improve the performance.`,
     },
     {
       company: "ProArch IT Solutions Pvt Ltd",
       role: "Intern",
       duration: "April 2024 - September 2024",
       description:
-        "Developing responsive web applications using React and Material UI",
+        "• Learnt and developed responsive web applications using React and Material UI",
     },
   ];
 
@@ -513,7 +519,7 @@ const Portfolio = (props) => {
                 <Button
                   variant="outlined"
                   component="a"
-                  href="https://drive.google.com/file/d/1U05PtXj_YSE1ccqYuPaUji4s9X2c-HMO/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1px4zHhG8YMrFnh6gMlyjQWpebLfhnkOl/view?usp=sharing"
                   size="Large"
                   sx={{
                     textTransform: "none",
