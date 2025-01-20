@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { Tilt } from "react-tilt";
 import axios from "axios";
 import MenuIcon from "@mui/icons-material/Menu";
+import Modal from "./Modal";
 import {
   AppBar,
   Box,
@@ -23,7 +24,6 @@ import {
   ThemeProvider,
   Toolbar,
   Tooltip,
-  styled,
   Stack,
   SvgIcon,
   List,
@@ -33,20 +33,13 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import {
-  FiMail,
-  FiLinkedin,
-  FiGithub,
-  FiMoon,
-  FiSun,
-  FiLink,
-  FiLink2,
-} from "react-icons/fi";
+import { FiMoon, FiSun, FiLink2 } from "react-icons/fi";
 import { Typewriter } from "react-simple-typewriter";
 import { BsArrowRight } from "react-icons/bs";
 import { getImageByURL } from "../util/image-util";
-
+import { styled } from "@mui/system";
 const StyledCard = styled(Card)(({ theme }) => ({
+  cursor: "pointer",
   height: "100%",
   display: "flex",
   flexDirection: "column",
@@ -57,6 +50,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 const StyledCardContent = styled(CardContent)({
   flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
 });
 
 const defaultOptions = {
@@ -74,7 +69,7 @@ const Portfolio = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
-
+  const [selectedProject, setSelectedProject] = useState(null);
   const aboutSection = useRef();
   const projectSection = useRef();
   const experienceSection = useRef();
@@ -84,6 +79,7 @@ const Portfolio = (props) => {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -137,7 +133,6 @@ const Portfolio = (props) => {
             <ListItemText>Projects</ListItemText>
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton
             sx={{ textAlign: "center" }}
@@ -195,6 +190,21 @@ const Portfolio = (props) => {
     message: "",
     severity: "success",
   });
+  const renderContent = (content, wordLimit) => {
+    const words = content?.split(" ");
+    if (content?.length > wordLimit) {
+      return words.slice(0, wordLimit).join(" ") + "...";
+    }
+    return content;
+  };
+  const handleDialogOpen = (project) => {
+    setSelectedProject(project);
+  };
+
+  const handleDialogClose = () => {
+    setSelectedProject(null);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -254,17 +264,12 @@ const Portfolio = (props) => {
   const projects = [
     {
       title: "Blog Application",
-      description: `
-      • Built a full-featured full stack Blog Application, using MongoDB, ExpressJS, ReactJS, NodeJS and Material UI.
-      • Developed a Medium-like platform for content creating, editing, and   management.
-      • Optimized performance with lazy loading and code splitting. 
-      • Integrated JWT for secure Authentication, Authorization, and Role Based Access Control.
-      • Integrated robust error-handling mechanisms on both client-side and server side using form validation library using Yup, useForm custom hooks, express-validators and ensuring data integrity. 
-      • Renders various Markdown Content and includes built-in features including Note Editor using React Quill.
-      • Integrated dynamic React Charts to create intuitive and visually compelling infographics, effectively showcasing comprehensive user interactions for each post.`,
+      description:
+        "Built a full-featured full stack Blog Application, using MongoDB, ExpressJS, ReactJS, NodeJS and Material UI. Developed a Medium-like platform for content creating, editing, and   management. Optimized performance with lazy loading and code splitting. Integrated JWT for secure Authentication, Authorization, and Role Based Access Control. Integrated robust error-handling mechanisms on both client-side and server side using form validation library using Yup, useForm custom hooks, express-validators and ensuring data integrity. Renders various Markdown Content and includes built-in features including Note Editor using React Quill. Integrated dynamic React Charts to create intuitive and visually compelling infographics, effectively showcasing comprehensive user interactions for each post.",
       image: "coverpage1.jpg",
       technologies: ["MongoDB", "ExpressJS", "ReactJS", "NodeJS", "MUI", "JWT"],
-      url: "https://github.com/SaiAkshith-2001/Blog-App",
+      githuburl: "https://github.com/SaiAkshith-2001/Blog-App",
+      deployedurl: "https://blog-app-frontend-orm8.onrender.com",
     },
     {
       title: "Task Management Application",
@@ -272,7 +277,8 @@ const Portfolio = (props) => {
         "Created a basic application where user can have notes and remainder",
       image: "coverpage2.jpg",
       technologies: ["React", "Tailwind CSS", "Styled Components"],
-      url: "https://github.com/SaiAkshith-2001/Task-management",
+      githuburl: "https://github.com/SaiAkshith-2001/Task-management",
+      deployedurl: " https://task-management-repo.vercel.app/",
     },
     {
       title: "To-Do List Application",
@@ -280,7 +286,8 @@ const Portfolio = (props) => {
         "Created a basic To-Do list application where can save notes",
       image: "coverpage3.png",
       technologies: ["React", "Redux", "TailwindCSS"],
-      url: "https://github.com/SaiAkshith-2001/todo-reduxtoolkit/tree/main",
+      githuburl:
+        "https://github.com/SaiAkshith-2001/todo-reduxtoolkit/tree/main",
     },
     {
       title: "Investment Calculator",
@@ -288,7 +295,10 @@ const Portfolio = (props) => {
         "Created a basic Investment calculator application where user can have a glance on Investment captial, estimated returns etc...",
       image: "coverpage4.jpg",
       technologies: ["React", "CSS"],
-      url: "https://github.com/SaiAkshith-2001/Investment-Calculator/tree/main",
+      githuburl:
+        "https://github.com/SaiAkshith-2001/Investment-Calculator/tree/main",
+      deployedurl:
+        "https://udemy-repo-8doss7aic-sai-akshiths-projects.vercel.app",
     },
   ];
 
@@ -297,15 +307,15 @@ const Portfolio = (props) => {
       company: "ProArch IT Solutions Pvt Ltd",
       role: "Junior Software Engineer",
       duration: "October 2024 - Present",
-      description: `• Collaborated effectively with teams in Agile environment managed by Jira, consistently delivering results with-in biweekly sprints user focused features using React, TypeScript, and MUI.
-        • Refactored previous code into MUI components with fully responsive web application, optimizing load times and improve the performance.`,
+      description:
+        "Collaborated effectively with teams in Agile environment managed by Jira, consistently delivering results with-in biweekly sprints user focused features using React, TypeScript, and MUI. Refactored previous code into MUI components with fully responsive web application, optimizing load times and improve the performance.",
     },
     {
       company: "ProArch IT Solutions Pvt Ltd",
       role: "Intern",
       duration: "April 2024 - September 2024",
       description:
-        "• Learnt and developed responsive web applications using React and Material UI",
+        "Learnt and developed responsive web applications using React and Material UI",
     },
   ];
 
@@ -519,7 +529,7 @@ const Portfolio = (props) => {
                 <Button
                   variant="outlined"
                   component="a"
-                  href="https://drive.google.com/file/d/1px4zHhG8YMrFnh6gMlyjQWpebLfhnkOl/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1DRp4hNraftijEeWZ36LIJd7DmgvqLGyW/view?usp=sharing"
                   size="Large"
                   sx={{
                     textTransform: "none",
@@ -629,32 +639,71 @@ const Portfolio = (props) => {
                 {projects.map((project, index) => (
                   <Grid item xs={12} sm={6} key={index}>
                     <Tilt options={defaultOptions}>
-                      <StyledCard>
+                      <StyledCard
+                        onClick={() => handleDialogOpen(project)}
+                        item={project}
+                      >
                         <CardMedia
                           component="img"
                           height="200"
-                          image={getImageByURL(project.image)}
-                          alt={project.title}
+                          image={getImageByURL(project?.image)}
+                          alt={project?.title}
                         />
                         <StyledCardContent>
                           <Typography variant="h6" gutterBottom>
-                            {project.title}
-                            <Tooltip title="Link" arrow>
+                            {project?.title}
+                            <Tooltip title="Source code" arrow>
                               <IconButton
-                                aria-label="github_link"
-                                href={project.url}
+                                href={project?.githuburl}
                                 target="_blank"
                               >
-                                <FiLink2 />
+                                <SvgIcon>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="64"
+                                    height="64"
+                                    shape-rendering="geometricPrecision"
+                                    text-rendering="geometricPrecision"
+                                    image-rendering="optimizeQuality"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    viewBox="0 0 640 640"
+                                  >
+                                    <path
+                                      d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"
+                                      fill={iconColor}
+                                    />
+                                  </svg>
+                                </SvgIcon>
                               </IconButton>
                             </Tooltip>
+                            {project?.deployedurl && (
+                              <Tooltip title="Deployed URL" arrow>
+                                <IconButton
+                                  href={project?.deployedurl}
+                                  target="_blank"
+                                >
+                                  <FiLink2 />
+                                </IconButton>
+                              </Tooltip>
+                            )}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
-                            {project.description}
+                            {renderContent(project?.description, 20)}
                           </Typography>
-                          <Stack mt={1} direction="row" spacing={1}>
-                            {project.technologies.map((tech) => (
-                              <Chip label={tech} size="small" />
+                          <Stack
+                            sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              flexDirection: { xs: "column", md: "row" },
+                              py: 2,
+                              gap: 0.75,
+                            }}
+                          >
+                            {project?.technologies.map((tech) => (
+                              <Chip label={tech} key={tech} />
                             ))}
                           </Stack>
                         </StyledCardContent>
@@ -663,6 +712,17 @@ const Portfolio = (props) => {
                   </Grid>
                 ))}
               </Grid>
+              <Box>
+                {selectedProject && (
+                  <Modal
+                    project={selectedProject}
+                    iconColor={iconColor}
+                    getImageByURL={getImageByURL}
+                    dialogOpen={!!selectedProject}
+                    setDialogOpen={handleDialogClose}
+                  />
+                )}
+              </Box>
             </Box>
             <Box sx={{ py: 8 }} ref={experienceSection}>
               <Typography
@@ -675,13 +735,26 @@ const Portfolio = (props) => {
               {experiences.map((exp, index) => (
                 <Card key={index} sx={{ my: 2 }}>
                   <CardContent>
-                    <Typography variant="h6">{exp.company}</Typography>
-                    <Typography color="text.secondary">{exp.role}</Typography>
-                    <Typography variant="body2" sx={{ mt: 1 }}>
-                      {exp.duration}
+                    <Typography
+                      variant="h6"
+                      sx={{ fontSize: "1rem", fontWeight: "bold" }}
+                    >
+                      {exp?.company}
                     </Typography>
-                    <Typography variant="body2" sx={{ mt: 1 }}>
-                      {exp.description}
+                    <Typography
+                      color="text.secondary"
+                      sx={{ fontStyle: "italic" }}
+                    >
+                      {exp?.role}
+                    </Typography>
+                    <Typography variant="body2" sx={{ my: 1 }}>
+                      {exp?.duration}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ fontSize: "1rem", fontWeight: "bold" }}
+                    >
+                      {exp?.description}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -698,12 +771,12 @@ const Portfolio = (props) => {
               {academics.map((academic, index) => (
                 <Card key={index} sx={{ my: 2 }}>
                   <CardContent>
-                    <Typography variant="h6">{academic.degree}</Typography>
+                    <Typography variant="h6">{academic?.degree}</Typography>
                     <Typography color="text.secondary">
-                      {academic.institution}
+                      {academic?.institution}
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1 }}>
-                      {academic.duration}
+                      {academic?.duration}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -725,7 +798,7 @@ const Portfolio = (props) => {
                       <Tooltip title="Link" arrow>
                         <IconButton
                           aria-label="github_link"
-                          href={achievement.url}
+                          href={achievement?.url}
                           target="_blank"
                         >
                           <FiLink2 />
@@ -733,10 +806,10 @@ const Portfolio = (props) => {
                       </Tooltip>
                     </Typography>
                     <Typography color="text.secondary">
-                      {achievement.organization}
+                      {achievement?.organization}
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1 }}>
-                      {achievement.description}
+                      {achievement?.description}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -754,7 +827,7 @@ const Portfolio = (props) => {
                 <Card key={index} sx={{ my: 2 }}>
                   <CardContent>
                     <Stack mt={1} direction="row" spacing={1}>
-                      {interest.tools.map((tech) => (
+                      {interest?.tools.map((tech) => (
                         <Chip label={tech} size="large" />
                       ))}
                     </Stack>
@@ -983,7 +1056,7 @@ const Portfolio = (props) => {
                   d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
                 ></path>
               </svg>{" "}
-              in India. &copy; 2024 All rights reserved.
+              in India. &copy; 2025 All rights reserved.
             </Typography>
           </Paper>
         </Box>
